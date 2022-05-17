@@ -1,8 +1,8 @@
 # Backend Challenge
 
-## Modelado de datos
-La base de datos usada ha sido MongoDb, debido a su alta capacidad de lecturas.
-El modelado de datos es el siguiente:
+## Data model
+The database used has been MongoDb, due to its high reading capacity.
+The data modeling is as follows:
 
 **Card**
 
@@ -32,18 +32,16 @@ El modelado de datos es el siguiente:
          }
       ],
      }
-Se ha optado por este modelado por los siguientes puntos:
+This modeling has been chosen for the following points:
 
-- El modelo de carta solo es buscado, usado por el propio dueño de la carta y las escrituras mas frequentes de este solo son para actualizar los stats de uso.
-- Debido a la limitación en MongoDb de un limite de tamaño de documento de 16Mg se opta por usar otra coleccion donde se hace referencia al streamer, usuario y las cartas que ha obtenido de ese streamer. En el caso de tener las cartas de los usuarios en el modelo de carta el tamaño del documento creceria muy rapidamente haciendo inviable el uso o escritura de este, es por eso que al hacerlo de esta forma dividimos la informacion por streamer y usuario permitiendo que el documento sea tan pequeño como la cantidad de cartas que tiene de un streamer, haciendo asi que las lecturas y escrituras sean muy rapidas.
+- The card model is only searched, used by the owner of the card and the most frequent writings of this are only to update the usage stats.
+- Due to the limitation in MongoDb of a document size limit of 16Mg, I decided to use another collection where the streamer, user and the cards obtained from that streamer are referenced. In the case of having the Cards of the users in the Card model, the size of the document would grow very quickly, making it unfeasible to use or write it, that is why by doing it this way we divide the information by streamer and user, allowing the document to be small as the number of cards a streamer has, thus making reads and writes very fast.
+## Architecture
+Regarding the architecture of how to use the cards, I propose this:
+Because in a stream there shouldn't be many cards and they have to go in the order in which they have been used, a queuing system like AWS SQS should be used where these cards are queued in order and then a microservice would be sending them to the stream respecting the cooldown between cards that the streamer has selected.
 
-## Arquitectura
-Respecto a la arquitectura de como usar las cartas propongo esto:
-Debido a que en un stream no deberian salir muchas cartas y estas tienen que ir en el orden que han sido usadas, habría  que usar un sistema de colas como SQS de AWS donde estas cartas se encolan en orden y luego un microservicio estaría mandandolas al stream respetando el cooldown entre cartas que haya selecionado el streamer.
 ![Arch](arch.png)
 
 
-## Routes
-Base: /api/v1
-
-Create a card: /cards
+## Postman
+In the repositories base there is the postman to test the operation of the backend.

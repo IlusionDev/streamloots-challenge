@@ -17,7 +17,7 @@ cardsRouter.get('/obtained/:streamerId', userCardsValidator.getObtainedCardsBySt
 cardsRouter.get('/obtained', (req: CRequest, res) => new UserCardsController(req, res).getAllUserCardsByUserId());
 
 
-cardsRouter.post('/:streamerId', (req: CRequest, res) => new UserCardsController(req, res).addUserCard());
+cardsRouter.post('/obtain/:streamerId', (req: CRequest, res) => new UserCardsController(req, res).addUserCard());
 
 
 export default cardsRouter;
