@@ -24,7 +24,7 @@ The data modeling is as follows:
     {
       "streamerId": "5a50159308f5a800111de759"
       "userId": "5a50159308f5a800111de750",
-      "carts": [
+      "cards": [
          {
           "cardId": "627af29daaecda1a992dc76a"
           "quantity": 3,

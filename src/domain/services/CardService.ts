@@ -29,17 +29,17 @@ export class CardService {
     }
 
     async publishCard(cardId: string): Promise<ICard> {
-        const cart = await CardRepository.getInstance(Card).getOne({ '_id': cardId });
+        const card = await CardRepository.getInstance(Card).getOne({ '_id': cardId });
 
-        if (!cart) {
+        if (!card) {
             throw new ErrorNotFound('Card');
         }
 
-        if (!cart?.limited || (!cart?.quantity && !cart?.limited) || !cart?.name || !cart?.image || !cart?.rarity) {
+        if (!card?.limited || (!card?.quantity && !card?.limited) || !card?.name || !card?.image || !card?.rarity) {
             throw new Error('Incomplete card, please fill all the card properties');
         }
 
-        return await CardRepository.getInstance(Card).update(cart, { published: true });
+        return await CardRepository.getInstance(Card).update(card, { published: true });
     }
 
     publishAction(cardIds: string[], streamerId: string, status: boolean): Promise<UpdateWriteOpResult> {
